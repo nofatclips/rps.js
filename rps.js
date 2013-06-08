@@ -85,11 +85,6 @@ Game.Sign = function (name) {
   
 };
 
-//var rock = new Game.Sign("Rock");
-//var paper = new Game.Sign("Paper");
-//var scissors = new Game.Sign("Scissors");
-//scissors.beats(paper).beats(rock).beats(scissors);
-
 var rockPaperScissors = 
   Game ("rock", "paper", "scissors").setRules(function() {
     scissors.beats(paper).beats(rock).beats(scissors);
