@@ -1,7 +1,10 @@
 var Game = function() {
   
+  var PLAYER_ONE = "Player 1 wins";
+  var PLAYER_TWO = "Player 2 wins";
+  var DRAW = "It's a draw";
+
   var _sameSignDraws = true;
-  
   var theSigns = {};
   for (var i=0, l=arguments.length; i<l; i++) {
     var sign = new Game.Sign(arguments[i]);
@@ -15,8 +18,8 @@ var Game = function() {
     return _sameSignDraws;  
   }
   
-  function passTrueToDrawWhenSignsAreTheSame (trueOrFalse) {
-      this._sameSignDraws = (trueOrFalse) ? true : false;
+  function passTrueToDrawWhenSignsAreTheSame (sameIsDraw) {
+      this._sameSignDraws = (sameIsDraw) ? true : false;
   }
   
   function setTheRulesToPlayTheGame (callback) {
@@ -28,11 +31,18 @@ var Game = function() {
     return this;
   }
   
+  function declareWhoWinsBetween (firstSign, secondSign) {
+    if (firstSign.winsWith(secondSign)) return PLAYER_ONE;
+    if (secondSign.winsWith(firstSign)) return PLAYER_TWO;
+    return DRAW;
+  }
+  
   return {
       signs: theSigns,
       sameSignDraws: drawsWhenSignsAreTheSame,
       setSameSignDraws: passTrueToDrawWhenSignsAreTheSame,
       setRules: setTheRulesToPlayTheGame,
+      whoWins: declareWhoWinsBetween
   };
   
 };
@@ -98,4 +108,4 @@ var rockPaperScissors =
   Game ("rock", "paper", "scissors").setRules(function() {
     scissors.beats(paper).beats(rock).beats(scissors);
   });
-console.log(rockPaperScissors.signs.rock.winsWith(rockPaperScissors.signs.paper));
+console.log(rockPaperScissors.whoWins(rockPaperScissors.signs.rock, rockPaperScissors.signs.paper));
