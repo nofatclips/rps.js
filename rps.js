@@ -33,9 +33,6 @@ var Game = function() {
       sameSignDraws: drawsWhenSignsAreTheSame,
       setSameSignDraws: passTrueToDrawWhenSignsAreTheSame,
       setRules: setTheRulesToPlayTheGame,
-      WON: "won",
-      LOST: "lost",
-      DREW: "drew"
   };
   
 };
@@ -71,22 +68,34 @@ Game.Sign = function (name) {
     return other;    
   };
   
-  this.beats = function (signs) {
+  this.beats = function(signs) {
     return fillArray(addToWins, addToLosts, arguments);
   };
+  
+  this.winsWith = function(that) {
+    return this.signsWinsWith.indexOf(that)>-1;
+  };
 
-  this.isBeatenBy = function (signs) {
+  this.isBeatenBy = function(signs) {
     return fillArray(addToLosts, addToWins, arguments);
   };
-  
-  this.draws = function (signs) {
+
+  this.losesWith = function(that) {
+    return this.signsLosesWith.indexOf(that)>-1;
+  };
+
+  this.draws = function(signs) {
     return fillArray(addToDraws, addToDraws, arguments);
   };
-  
+
+  this.drawsWith = function(that) {
+    return this.signsDrawsWith.indexOf(that)>-1;
+  };
+
 };
 
 var rockPaperScissors = 
   Game ("rock", "paper", "scissors").setRules(function() {
     scissors.beats(paper).beats(rock).beats(scissors);
   });
-console.log(rockPaperScissors.signs.rock);
+console.log(rockPaperScissors.signs.rock.winsWith(rockPaperScissors.signs.paper));
