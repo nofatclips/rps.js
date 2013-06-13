@@ -1,22 +1,22 @@
 Game.Sign = function (name) {
   
   var self = this;
+  var signsWinsWith = [];
+  var signsLosesWith = [];
+  var signsDrawsWith = [];
   
   this.name = name;
-  this.signsWinsWith = [];
-  this.signsLosesWith = [];
-  this.signsDrawsWith = [];
   
   var addToWins = function (sign) {
-    this.signsWinsWith.push(sign);
+    signsWinsWith.push(sign);
   };
   
   var addToLosts = function (sign) {
-    this.signsLosesWith.push(sign);
+    signsLosesWith.push(sign);
   };
 
   var addToDraws = function (sign) {
-    this.signsDrawsWith.push(sign);
+    signsDrawsWith.push(sign);
   };
 
   var fillArray = function (thisFunction, thatFunction, args) {
@@ -34,7 +34,7 @@ Game.Sign = function (name) {
   };
   
   this.winsWith = function(that) {
-    return this.signsWinsWith.indexOf(that)>-1;
+    return signsWinsWith.indexOf(that)>-1;
   };
 
   this.isBeatenBy = function(signs) {
@@ -42,7 +42,7 @@ Game.Sign = function (name) {
   };
 
   this.losesWith = function(that) {
-    return this.signsLosesWith.indexOf(that)>-1;
+    return signsLosesWith.indexOf(that)>-1;
   };
 
   this.draws = function(signs) {
@@ -50,7 +50,7 @@ Game.Sign = function (name) {
   };
 
   this.drawsWith = function(that) {
-    return this.signsDrawsWith.indexOf(that)>-1;
+    return signsDrawsWith.indexOf(that)>-1;
   };
 
 };

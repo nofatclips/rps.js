@@ -4,6 +4,12 @@ var Game = function() {
   var PLAYER_TWO = "Player 2 wins";
   var DRAW = "It's a draw";
 
+  var callbacks = {
+	playerOneWins: [],
+	playerTwoWins: [],
+	nobodyWins: []
+  }
+
   var _sameSignDraws = true;
   var theSigns = {};
   for (var i=0, l=arguments.length; i<l; i++) {
@@ -32,9 +38,37 @@ var Game = function() {
   }
   
   function declareWhoWinsBetween (firstSign, secondSign) {
-    if (firstSign.winsWith(secondSign)) return PLAYER_ONE;
-    if (secondSign.winsWith(firstSign)) return PLAYER_TWO;
+    if (firstSign.winsWith(secondSign)) {
+		executeTheCallbacks (callbacks.playerOneWins.push, [firstSign, secondSign])
+		return PLAYER_ONE;
+	}
+    if (secondSign.winsWith(firstSign)) {
+		executeTheCallbacks (callbacks.playerTwoWins.push, [firstSign, secondSign])
+		return PLAYER_TWO;
+	}
+	executeTheCallbacks (callbacks.nobodyWins.push, [firstSign, secondSign])
     return DRAW;
+  }
+  
+  function executeThisCallbackWhenPlayerOneWins (callback) {
+	callbacks.playerOneWins.push(callback);
+	return this;
+  }
+
+  function executeThisCallbackWhenPlayerTwoWins (callback) {
+	callbacks.playerTwoWins.push(callback);
+	return this;
+  }
+  
+  function executeThisCallbackWhenNobodyWins (callback) {
+	callbacks.nobodyWins.push(callback);
+	return this;
+  }
+
+  function executeTheCallbacks (callbacks_array, arguments_array) {
+	for (var callback in callbacks_array) {
+	  callback.apply(arguments_array);
+	}	
   }
   
   return {
@@ -42,7 +76,10 @@ var Game = function() {
       sameSignDraws: drawsWhenSignsAreTheSame,
       setSameSignDraws: passTrueToDrawWhenSignsAreTheSame,
       setRules: setTheRulesToPlayTheGame,
-      whoWins: declareWhoWinsBetween
+      whoWins: declareWhoWinsBetween,
+	  whenPlayerOneWins: executeThisCallbackWhenPlayerOneWins,
+	  whenPlayerTwoWins: executeThisCallbackWhenPlayerTwoWins,
+	  whenPlayersDraw: executeThisCallbackWhenNobodyWins
   };
   
 };
