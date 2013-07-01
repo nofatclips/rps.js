@@ -1,10 +1,12 @@
 RockPaperScissors.js
-======
+====================
 
 Well, so I wanted to make my own JavaScript framework, but I also wanted it to be useful and unique: was there anything around that didn't have its won dedicated bunch of JavaScript frameworks already available? Is there a much needed gap to fill in the world of JS frameworks? Yes. Rock Paper Scissors!
 
+Now also Python flavored: [rps.py](https://github.com/nofatclips/rps.py)
+
 You Gotta Be Kidding?
-------
+---------------------
 
 Yes, kind of. Anyway, here it is.
 
